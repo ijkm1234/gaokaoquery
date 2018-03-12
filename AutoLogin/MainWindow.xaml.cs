@@ -39,10 +39,10 @@ namespace AutoLogin
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             RequestHelper helper = new RequestHelper();
-            string htmlString = helper.Request(UserName.Text,ID.Text);
-            
+            var username = Regex.Replace(UserName.Text, @"\s", "");
+            var id= Regex.Replace(ID.Text, @"\s", "");
+            string htmlString = helper.Request(username,id);
             TextShow.Text = (htmlString);
-          
             Browser.NavigateToString(ConvertExtendedASCII(htmlString));
         }
         private static string ConvertExtendedASCII(string HTML)
@@ -258,10 +258,13 @@ namespace AutoLogin
     {
         public StuInfo ExtractFileStr(string fileString)
         {
-                var elementList = fileString.Split(new char[]{ ','});
-                int order;
-                int.TryParse(elementList[0],out order);
-                var stu = new StuInfo() { Order = order, UserName = elementList[1], ID = elementList[2] };
+            var elementList = fileString.Split(new char[] { ',' });
+            var o = Regex.Replace(elementList[0], @"\s","");
+            int order;
+            int.TryParse(o, out order);
+            var username = Regex.Replace(elementList[1], @"\s", "");
+            var id = Regex.Replace(elementList[2], @"\s", "");
+            var stu = new StuInfo() { Order = order, UserName = username, ID = id };
             return stu;
         }
         public GradeInfo ExtractGradeStr(string htmlString)
