@@ -264,7 +264,7 @@ namespace AutoLogin
             int.TryParse(o, out order);
             var username = Regex.Replace(elementList[1], @"\s", "");
             var id = Regex.Replace(elementList[2], @"\s", "");
-            var studyttes = new StuInfo() { Order = order, UserName = username, ID = id };
+            var stu = new StuInfo() { Order = order, UserName = username, ID = id };
             return stu;
         }
         public GradeInfo ExtractGradeStr(string htmlString)
