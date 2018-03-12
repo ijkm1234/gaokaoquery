@@ -258,9 +258,6 @@ namespace AutoLogin
     {
         public StuInfo ExtractFileStr(string fileString)
         {
-            var elementList = fileString.Split(new char[] { ',' });
-            var o = Regex.Replace(elementList[0], @"\s","");
-            int order;
             int.TryParse(o, out order);
             var username = Regex.Replace(elementList[1], @"\s", "");
             var id = Regex.Replace(elementList[2], @"\s", "");
