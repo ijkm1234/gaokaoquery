@@ -104,17 +104,27 @@ namespace AutoLogin
             GradeList.Clear();
             var stulist = StuList;
             var list = new ConcurrentBag<GradeInfo>();
-            Parallel.ForEach(stulist,item=>
-            {
-                    RequestHelper helper = new RequestHelper();
-                    string gradeHtmlString = helper.Request(item.UserName, item.ID);
-                    var grade = new StringExtract().ExtractGradeStr(gradeHtmlString);
-                    grade.Order = item.Order;
-                    list.Add(grade);
-            });
+            string error="";
+            Parallel.ForEach(stulist, item =>
+             {
+                 RequestHelper helper = new RequestHelper();
+                 try
+                 {
+                     string gradeHtmlString = helper.Request(item.UserName, item.ID);
+                     var grade = new StringExtract().ExtractGradeStr(gradeHtmlString);
+                     grade.Order = item.Order;
+                     list.Add(grade);
+                 }
+                 catch (Exception)
+                 {
+                     error += $"{item.Order}查询失败\n";
+                 }
+                 
+                 
+             });
             stopwatch.Stop();
             GradeList = list.AsEnumerable().ToList();
-            MessageBox.Show("耗时："+stopwatch.ElapsedMilliseconds.ToString()+"\n"+"查询条数："+GradeList.Count.ToString());
+            MessageBox.Show("耗时："+stopwatch.ElapsedMilliseconds.ToString()+"\n"+"查询条数："+GradeList.Count.ToString()+"\n"+error);
             GradeList.Sort((x, y) => x.Order.CompareTo(y.Order));
             GradeTable.ItemsSource = null;
             GradeTable.ItemsSource = GradeList;
