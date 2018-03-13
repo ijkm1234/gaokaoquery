@@ -283,7 +283,7 @@ namespace AutoLogin
             var totalMatch = Regex.Match(htmlString, @"总分.*?(>(\d*\.?\d*)</td>.*?)>(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
             gradeInfo.Total = totalMatch.Groups[2].Value;
             gradeInfo.Ranking = totalMatch.Groups[3].Value;
-            var name = Regex.Match(htmlString, @"姓名：.*?([\u4E00-\u9FA5]+)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            var name = Regex.Match(htmlString, @"姓名：.*?([\u4E00-\u9FA5]*)\s*?</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
             gradeInfo.Name = name.Groups[1].Value;
             var school = Regex.Match(htmlString, @"录取院校名称.*?([\u4E00-\u9FA5]+)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
             gradeInfo.School = school.Groups[1].Value;
