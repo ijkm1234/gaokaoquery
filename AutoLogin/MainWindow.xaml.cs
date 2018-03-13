@@ -76,7 +76,7 @@ namespace AutoLogin
             
             var fileDialog = (OpenFileDialog)sender;
             FileStream fileStream = new FileStream(fileDialog.FileName,FileMode.Open);
-            StreamReader reader = new StreamReader(fileStream);
+            StreamReader reader = new StreamReader(fileStream,Encoding.UTF8);
             string linestr = "";
             StuList.Clear();
             
