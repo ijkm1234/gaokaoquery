@@ -44,29 +44,36 @@
                     <RowDefinition ></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="50"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="1"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Menu Grid.Column="0" Grid.ColumnSpan="3" >
                     <MenuItem Header="打开文件" Click="MenuItem_Click"></MenuItem>
                     <MenuItem Header="导出成绩" Click="MenuItem_Click_1"></MenuItem>
                 </Menu>
+                <Rectangle Grid.Column="1" Grid.Row="1" Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
                 <DataGrid x:Name="StuTable" IsReadOnly="True"  AutoGenerateColumns="False" Grid.Row="1" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="40" Header="序号" Binding="{Binding Order}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="1*" Header="考试号" Binding="{Binding UserName}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="1*" Header="身份证号" Binding="{Binding ID}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="7*" Header="考试号" Binding="{Binding UserName}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="9*" Header="身份证号" Binding="{Binding ID}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="BatchQuery" Content="查询" Height="30" Width="50" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Click="BatchQuery_Click"></Button>
+                <Button x:Name="BatchQuery" Content="查询"  Width="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Column="2" Grid.Row="0" Click="BatchQuery_Click"></Button>
                 <DataGrid x:Name="GradeTable" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="2" DataContext="GradeList">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="40" Header="序号" Binding="{Binding Order, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></DataGridTextColumn>
                         <DataGridTextColumn Width="1*" Header="姓名" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="1*" Header="语文" Binding="{Binding Yuwen}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="1*" Header="数学" Binding="{Binding Math}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="1*" Header="英语" Binding="{Binding English}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="1*" Header="理综" Binding="{Binding Lizong}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="1*" Header="政策" Binding="{Binding Policy}"></DataGridTextColumn>
                         <DataGridTextColumn Width="1*" Header="总分" Binding="{Binding Total}"></DataGridTextColumn>
                         <DataGridTextColumn Width="1*" Header="名次" Binding="{Binding Ranking}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="1*" Header="学校" Binding="{Binding School}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="2*" Header="学校" Binding="{Binding School}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="2*" Header="专业" Binding="{Binding Major}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

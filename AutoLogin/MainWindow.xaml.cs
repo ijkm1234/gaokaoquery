@@ -151,6 +151,11 @@ namespace AutoLogin
             {
                string str = item.Order+",";
                 str += item.Name + ",";
+                str += item.Yuwen + ",";
+                str += item.Math + ",";
+                str += item.English + ",";
+                str += item.Lizong + ",";
+                str += item.Policy + ",";
                 str += item.Total + ",";
                 str += item.Ranking+",";
                 str += item.School;
@@ -261,7 +266,9 @@ namespace AutoLogin
         public string SubjectiveLizong { get; set; }
         public string NationalJiafen { get; set; }
         public string  RegionJiafen { get; set; }
+        public double Policy { get; set; }
         public string School { get; set; }
+        public string Major { get; set; }
     }
 
     public class StringExtract
@@ -283,10 +290,28 @@ namespace AutoLogin
             var totalMatch = Regex.Match(htmlString, @"总分.*?(>(\d*\.?\d*)</td>.*?)>(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
             gradeInfo.Total = totalMatch.Groups[2].Value;
             gradeInfo.Ranking = totalMatch.Groups[3].Value;
+            var yuwen = Regex.Match(htmlString, @"语文.*?>(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            gradeInfo.Yuwen = yuwen.Groups[1].Value;
+            var math = Regex.Match(htmlString, @"数学.*?>(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            gradeInfo.Math = math.Groups[1].Value;
+            var english = Regex.Match(htmlString, @"外语.*?>(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            gradeInfo.English = english.Groups[1].Value;
+            var liz = Regex.Match(htmlString, @"综合.*?>(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            gradeInfo.Lizong = liz.Groups[1].Value;
             var name = Regex.Match(htmlString, @"姓名：.*?([\u4E00-\u9FA5]*)\s*?</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
             gradeInfo.Name = name.Groups[1].Value;
             var school = Regex.Match(htmlString, @"录取院校名称.*?([\u4E00-\u9FA5]+)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
             gradeInfo.School = school.Groups[1].Value;
+            var major = Regex.Match(htmlString, @"专业名称.*?([\u4E00-\u9FA5]+)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            gradeInfo.Major = major.Groups[1].Value;
+            var reNum = Regex.Match(htmlString, @"地方性政策加分分值</td>.*?(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            gradeInfo.RegionJiafen = reNum.Groups[1].Value;
+            var naNum = Regex.Match(htmlString, @"全国性政策加分分值</td>.*?(\d*\.?\d*)</td>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+            gradeInfo.NationalJiafen = naNum.Groups[1].Value;
+            double a, b;
+            double.TryParse(gradeInfo.RegionJiafen, out a);
+            double.TryParse(gradeInfo.NationalJiafen, out b);
+            gradeInfo.Policy = a + b;
             return gradeInfo;
         }
         
