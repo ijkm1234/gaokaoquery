@@ -96,39 +96,40 @@ namespace AutoLogin
             
         }
 
-        private void BatchQuery_Click(object sender, RoutedEventArgs e)
+        private async void BatchQuery_Click(object sender, RoutedEventArgs e)
         {
             object obj = new object();
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            GradeList.Clear();
             var stulist = StuList;
             var list = new ConcurrentBag<GradeInfo>();
-            string error="";
-            Parallel.ForEach(stulist, item =>
+            string error = "";
+            await Task.Factory.StartNew(() =>
              {
-                 RequestHelper helper = new RequestHelper();
-                 try
+                 Parallel.ForEach(stulist, item =>
                  {
-                     string gradeHtmlString = helper.Request(item.UserName, item.ID);
-                     var grade = new StringExtract().ExtractGradeStr(gradeHtmlString);
-                     grade.Order = item.Order;
-                     list.Add(grade);
-                 }
-                 catch (Exception)
-                 {
-                     error += $"{item.Order}查询失败\n";
-                 }
-                 
-                 
+                     RequestHelper helper = new RequestHelper();
+                     try
+                     {
+                         string gradeHtmlString = helper.Request(item.UserName, item.ID);
+                         var grade = new StringExtract().ExtractGradeStr(gradeHtmlString);
+                         grade.Order = item.Order;
+                         list.Add(grade);
+                     }
+                     catch (Exception)
+                     {
+                         error += $"{item.Order}查询失败\n";
+                     }
+                 });
              });
             stopwatch.Stop();
+            GradeList.Clear();
             GradeList = list.AsEnumerable().ToList();
-            MessageBox.Show("耗时："+stopwatch.ElapsedMilliseconds.ToString()+"\n"+"查询条数："+GradeList.Count.ToString()+"\n"+error);
+            MessageBox.Show("耗时：" + stopwatch.ElapsedMilliseconds.ToString() + "\n" + "查询条数：" + GradeList.Count.ToString() + "\n" + error);
             GradeList.Sort((x, y) => x.Order.CompareTo(y.Order));
             GradeTable.ItemsSource = null;
             GradeTable.ItemsSource = GradeList;
-    }
+        }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
