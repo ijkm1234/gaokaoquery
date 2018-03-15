@@ -19,11 +19,11 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="考试号:" Grid.Row="0" Grid.Column="0" Height="20" Width="40" Margin="9.333,13,402,8.333" ></TextBlock>
-                <TextBox x:Name="UserName" Height="20" Width="110" Grid.Row="0" Grid.Column="0" Margin="67.333,13,274,8.333"></TextBox>
-                <TextBlock Text="身份证号:" Grid.Row="1" Grid.Column="0" Height="20" Width="60" Margin="0.333,11.667,391,9.667"/>
-                <TextBox x:Name="ID" Height="20" Width="135" Grid.Row="1" Grid.Column="0" Margin="57.333,14.667,264,6.667"/>
-                <Button x:Name="Submit" Content="查询" Grid.Row="2" Grid.Column="0" Width="40" Height="20" Margin="0.333,15.333,411,6" Click="Submit_Click"/>
+                <TextBlock Text="考试号:" Grid.Row="0" Grid.Column="0" Height="20" Width="60" Margin="40,15,0,15" TextAlignment="Right" HorizontalAlignment="Left"></TextBlock>
+                <TextBox x:Name="UserName" Height="20" Grid.Row="0" Grid.Column="0" Margin="110,15,0,15" MaxLength="14" HorizontalAlignment="Left" Width="135"/>
+                <TextBlock Text="身份证号:" Grid.Row="1" Grid.Column="0" Height="20" Width="60" Margin="40,15,0,15" TextAlignment="Right" HorizontalAlignment="Left"/>
+                <TextBox x:Name="ID" Height="20" Width="135" Grid.Row="1" Grid.Column="0" Margin="110,15,0,15" MaxLength="18" HorizontalAlignment="Left"/>
+                <Button x:Name="Submit" Content="查询" Grid.Row="2" Grid.Column="0" Width="40" Height="20" Margin="55,15,0,15" HorizontalAlignment="Left" Click="Submit_Click"/>
                 <TextBox x:Name="TextShow" Grid.Column="0" Grid.Row="3" Margin="10" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" />
                 <Border x:Name="boder"  Grid.Row="0" Grid.RowSpan="4"  Grid.Column="1" Height="auto" Width="auto" Margin="10" BorderThickness="2" CornerRadius="5">
                     <Border.BorderBrush>
