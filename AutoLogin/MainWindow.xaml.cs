@@ -100,6 +100,7 @@ namespace AutoLogin
         {
             object obj = new object();
             LoadLbl.Content = "Loding...";
+            BatchQuery.IsEnabled = false;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             var stulist = StuList;
@@ -127,6 +128,7 @@ namespace AutoLogin
             GradeList.Clear();
             GradeList = list.AsEnumerable().ToList();
             LoadLbl.Content = "";
+            BatchQuery.IsEnabled = true;
             MessageBox.Show("耗时：" + stopwatch.ElapsedMilliseconds.ToString() + "\n" + "查询条数：" + GradeList.Count.ToString() + "\n" + error);
             GradeList.Sort((x, y) => x.Order.CompareTo(y.Order));
             GradeTable.ItemsSource = null;
