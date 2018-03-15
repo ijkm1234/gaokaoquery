@@ -48,7 +48,7 @@
                     <ColumnDefinition Width="1"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Menu Grid.Column="0" Grid.ColumnSpan="3" >
+                <Menu x:Name="Menu" Grid.Column="0" Grid.ColumnSpan="3" >
                     <MenuItem Header="打开文件" Click="MenuItem_Click"></MenuItem>
                     <MenuItem Header="导出成绩" Click="MenuItem_Click_1"></MenuItem>
                 </Menu>
@@ -60,7 +60,8 @@
                         <DataGridTextColumn Width="9*" Header="身份证号" Binding="{Binding ID}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="BatchQuery" Content="查询"  Width="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Column="2" Grid.Row="0" Click="BatchQuery_Click"></Button>
+                <Label x:Name="LoadLbl" Width="100" Height="{Binding ElementName=Menu, Path=ActualHeight}" HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,100,0" Padding="0"/>
+                <Button x:Name="BatchQuery" Content="查询"  Width="40" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Column="2" Grid.Row="0" Click="BatchQuery_Click"></Button>
                 <DataGrid x:Name="GradeTable" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="2" DataContext="GradeList">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="40" Header="序号" Binding="{Binding Order, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></DataGridTextColumn>
