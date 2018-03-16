@@ -126,12 +126,9 @@ namespace AutoLogin
             stopwatch.Stop();
             GradeList.Clear();
             GradeList = list.AsEnumerable().ToList();
-            list = null;
             LoadLbl.Content = "";
             BatchQuery.IsEnabled = true;
             MessageBox.Show("耗时：" + stopwatch.ElapsedMilliseconds.ToString() + "\n" + "查询条数：" + GradeList.Count.ToString() + "\n" + error);
-            stopwatch = null;
-            error = null;
             GradeList.Sort((x, y) => x.Order.CompareTo(y.Order));
             GradeTable.ItemsSource = null;
             GradeTable.ItemsSource = GradeList;
