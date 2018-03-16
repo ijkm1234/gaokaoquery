@@ -195,6 +195,7 @@ namespace AutoLogin
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://cx.ahzsks.cn/pugao/pgcj2017_in.php");
                 request.Method = "GET";
                 request.Host = "cx.ahzsks.cn";
+                request.KeepAlive = false;
                 request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0";
                 request.Accept = " text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                 request.CookieContainer = new CookieContainer();
@@ -229,6 +230,7 @@ namespace AutoLogin
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://cx.ahzsks.cn/pugao/pgcj2017_out.php");
                 request.Method = "POST";
                 request.Host = "cx.ahzsks.cn";
+                request.KeepAlive = false;
                 request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0";
                 request.Accept = " text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                 request.ContentLength = form.Length;
