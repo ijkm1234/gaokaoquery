@@ -154,16 +154,23 @@ namespace AutoLogin
             StreamWriter writer = new StreamWriter(fs, Encoding.UTF8);
             foreach (var item in GradeList)
             {
-               string str = item.Order+",";
-                str += item.Name + ",";
-                str += item.Yuwen + ",";
-                str += item.Math + ",";
-                str += item.English + ",";
-                str += item.Lizong + ",";
-                str += item.Policy + ",";
-                str += item.Total + ",";
-                str += item.Ranking+",";
-                str += item.School;
+                string str = item.Order.ToString();
+                str += "," + item.Name;
+                str += "," + item.Yuwen;
+                str += "," + item.Math;
+                str += "," + item.English;
+                str += "," + item.Lizong;
+                str += "," + item.Policy;
+                str += "," + item.Total;
+                str += "," + item.Ranking;
+                if (item.School!=null)
+                {
+                    str += "," + item.School;
+                }
+                if (item.Major!=null)
+                {
+                    str += "," + item.Major;
+                }
                 writer.WriteLine(str);
             }
             writer.Close();
