@@ -34,6 +34,7 @@ namespace AutoLogin
         {
             InitializeComponent();
             StuTable.ItemsSource = StuList;
+            ServicePointManager.DefaultConnectionLimit = 100;
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
@@ -98,17 +99,15 @@ namespace AutoLogin
 
         private async void BatchQuery_Click(object sender, RoutedEventArgs e)
         {
-            object obj = new object();
             LoadLbl.Content = "Loding...";
             BatchQuery.IsEnabled = false;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            var stulist = StuList;
             var list = new ConcurrentBag<GradeInfo>();
             string error = "";
             await Task.Factory.StartNew(() =>
              {
-                 Parallel.ForEach(stulist, item =>
+                 Parallel.ForEach(StuList, item =>
                  {
                      RequestHelper helper = new RequestHelper();
                      try
@@ -127,9 +126,12 @@ namespace AutoLogin
             stopwatch.Stop();
             GradeList.Clear();
             GradeList = list.AsEnumerable().ToList();
+            list = null;
             LoadLbl.Content = "";
             BatchQuery.IsEnabled = true;
             MessageBox.Show("耗时：" + stopwatch.ElapsedMilliseconds.ToString() + "\n" + "查询条数：" + GradeList.Count.ToString() + "\n" + error);
+            stopwatch = null;
+            error = null;
             GradeList.Sort((x, y) => x.Order.CompareTo(y.Order));
             GradeTable.ItemsSource = null;
             GradeTable.ItemsSource = GradeList;
@@ -200,12 +202,14 @@ namespace AutoLogin
                 request.Accept = " text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                 request.CookieContainer = new CookieContainer();
 
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Co = request.CookieContainer;
-                Stream stream = response.GetResponseStream();
-                using (var reader = new StreamReader(stream, Encoding.GetEncoding("gb2312")))
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    return reader.ReadToEnd();
+                    Co = request.CookieContainer;
+                    Stream stream = response.GetResponseStream();
+                    using (var reader = new StreamReader(stream, Encoding.GetEncoding("gb2312")))
+                    {
+                        return reader.ReadToEnd();
+                    }
                 }
             }
             catch (Exception)
@@ -236,17 +240,18 @@ namespace AutoLogin
                 request.ContentLength = form.Length;
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.CookieContainer = Co;
-
+                
                 using (Stream requeststream = request.GetRequestStream())
                 {
                     requeststream.Write(form,0, form.Length);
                 }
                 
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                using (var reader = new StreamReader(stream, Encoding.GetEncoding("gb2312")))
-                {
-                    return reader.ReadToEnd();
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()){
+                    Stream stream = response.GetResponseStream();
+                    using (var reader = new StreamReader(stream, Encoding.GetEncoding("gb2312")))
+                    {
+                        return reader.ReadToEnd();
+                    }
                 }
             }
             catch (Exception)
